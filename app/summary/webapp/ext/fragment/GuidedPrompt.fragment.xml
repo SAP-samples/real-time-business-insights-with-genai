@@ -1,0 +1,41 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
+	<Popover id="idGuidedPrompt" title="Customize Summarization" beforeOpen="onBeforeOpen" afterClose="onAfterClose" placement="HorizontalPreferredLeft" class="sapUiContentPadding" bindingContexts="prompt/>config" modal="true">
+    <l:VerticalLayout id="idVL">
+      <Label id="idLabelPrompt" text="Choose Prompt Category" labelFor="idSBPromptCategory"></Label>
+      <SegmentedButton id="idSBPromptCategory" selectedKey="{prompt>selectedCategory}" width="300px" selectionChange="onPromptCategoryChange">
+        <items>
+          <SegmentedButtonItem id="idSBPromptCategorySI" text="Standard Inputs" key="SIPrompt"/>
+          <SegmentedButtonItem id="idSBPromptCategoryOE" text="Open Ended" key="OEPrompt" />
+        </items>
+      </SegmentedButton>
+      <l:VerticalLayout id="idVLSI" visible="true" width="100%" class="sapUiSmallMarginTopBottom">
+        <Label id="idLabelSISelectStructure" text="Summary Structure" labelFor="idSISelectStructure" class="sapUiSmallMarginTop"></Label>
+        <Select id="idSISelectStructure" forceSelection="false" selectedKey="{prompt>SISelectedStructure}" width="100%">
+					<core:ListItem id="paragraph" key="paragraph" text="Paragraph" icon="sap-icon://text-align-justified"/>
+          <core:ListItem id="pointbypoint" key="pointbypoint" text="Point by Point" icon="sap-icon://bullet-text"/>
+				</Select>
+        <Label id="idLabelSIAdjustLength" text="Word Length" labelFor="idSIAdjustLength" class="sapUiSmallMarginTop"></Label>
+        <Slider id="idSIAdjustLength" value="{prompt>SIWordLength}" min="0" max="500" step="25" showAdvancedTooltip="true" width="100%"/>
+        <Label id="idLabelSIVoiceTone" text="Tone of Voice" labelFor="idSIAdjustLength" class="sapUiSmallMarginTop"></Label>
+        <SegmentedButton id="idSIVoiceTone" selectedKey="{prompt>SIVoiceTone}" width="300px" selectionChange="onPromptCategoryChange">
+          <items>
+            <SegmentedButtonItem id="idSIVoiceToneC" text="Casual" key="Casual"/>
+            <SegmentedButtonItem id="idSIVoiceToneN" text="Neutral" key="Neutral" />
+            <SegmentedButtonItem id="idSIVoiceToneF" text="Formal" key="Formal"/>
+          </items>
+        </SegmentedButton>
+      </l:VerticalLayout>
+      <l:VerticalLayout id="idVLOE" visible="false" class="sapUiSmallMarginTopBottom" width="100%">
+        <Label id="idLabelOEPromptInput" text="Open Ended Prompt" labelFor="idTAOEPromptInput" class="sapUiSmallMarginTop"></Label>
+        <TextArea id="idTAOEPromptInput" value="{prompt>OEPromptInput}" showValueStateMessage="false" valueState="Information" width="100%" growing="true" rows="5" growingMaxLines="10" editable="true" />
+      </l:VerticalLayout>
+    </l:VerticalLayout>
+    <footer>
+			<OverflowToolbar id="idOTGuidedPrompt" >
+				<ToolbarSpacer id="idTSGuidedPrompt" />
+				<Button id="idBtnGenerate" text="Generate" press="onConfirmGenerate" type="Emphasized" />
+        <Button id="idBtnCancel" text="Cancel" press="onConfirmCancel" />
+			</OverflowToolbar>
+		</footer>
+	</Popover>
+</core:FragmentDefinition>

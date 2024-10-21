@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns:layout="sap.ui.layout" xmlns:tnt="sap.tnt" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:macros="sap.fe.macros">
+<Panel id="idPanelSummary" expanded="true" headerText="" width="auto" core:require="{ handler: 'sap/bos/app/summary/ext/fragment/HistoricalSummary'}">
+    <content>				
+        <Toolbar id="idTBSummary" style="Clear" design="Solid">
+            <tnt:InfoLabel id="idILSummary" text="{= ${summarization} === 'no historical summary found' ? '' : ${parts: [{path: 'modifiedAt', targetType: 'any'}], formatter: 'handler.formatModifiedAt'}}" colorScheme="6" class="customWhiteBG" icon="sap-icon://information" width="315px" visible="{path: 'summarization', targetType: 'any', formatter: 'handler.formatVisibility'}"/>
+            <ToolbarSpacer id="idTBSSummary" />
+            <Button id="idBtnSummary" type="Emphasized" icon="sap-icon://ai" text="Generate Summary" class="customButton" press="handler.onReGenerateSummary"></Button>
+        </Toolbar>
+        <TextArea id="idTASummary" value="{summarization}" width="100%" growing="true" growingMaxLines="15" editable="false" />
+    </content>
+</Panel>
+</core:FragmentDefinition>

@@ -1,0 +1,13 @@
+GET https://port4004-workspaces-ws-m52jh.eu10.applicationstudio.cloud.sap/odata/v4/op-api-maintenanceorder-0002/MaintenanceOrder
+Content-Type: application/json
+Authorization: Basic khuranan:Welcome1
+
+####Summarize Call
+POST http://localhost:4004/odata/v4/bodetails/Equipment('10000000')/summarize
+Content-Type: application/json
+Accept: application/json
+
+
+
+### Delete Summary
+DELETE  http://localhost:4004/odata/v4/bosummary/BusinessObjectSummarizations(9b60a61f-d0b6-49d3-ab08-94d4a2b3d47e)

@@ -1,0 +1,187 @@
+_schema-version: '3.1'
+ID: sap-bos
+description: SAP Business Object Summarization
+version: 2.0.1
+modules:
+  - name: sap-bos-srv
+    type: nodejs
+    path: gen/srv
+    requires:
+      - name: sap-bos-db
+      - name: sap-bos-connectivity
+      - name: sap-bos-dest
+      - name: sap-bos-auth
+      - name: sap-bos-cloud-logs
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: ${default-url}
+  - name: sap-bos-db-deployer
+    type: hdb
+    path: gen/db
+    requires:
+      - name: sap-bos-db
+    parameters:
+      buildpack: nodejs_buildpack
+  - name: sap-bos-destination-content
+    type: com.sap.application.content
+    requires:
+      - name: srv-api
+      - name: sap-bos-dest
+        parameters:
+          content-target: true
+      - name: sap-bos-html-repo-host
+        parameters:
+          service-key:
+            name: sap-bos-html-repo-host-key
+      - name: sap-bos-auth
+        parameters:
+          service-key:
+            name: sap-bos-auth-key
+    parameters:
+      content:
+        instance:
+          destinations:
+            - Authentication: OAuth2UserTokenExchange
+              HTML5.Timeout: 600000
+              Name: sap-bos-app-srv
+              TokenServiceInstanceName: sap-bos-auth
+              TokenServiceKeyName: sap-bos-auth-key
+              URL: ~{srv-api/srv-url}
+              sap.cloud.service: sap.bos.summary
+            - Name: sap-bos-html-repo-host
+              ServiceInstanceName: sap-bos-html-repo-host
+              ServiceKeyName: sap-bos-html-repo-host-key
+              sap.cloud.service: sap.bos.summary
+            - Authentication: OAuth2UserTokenExchange
+              Name: sap-bos-auth
+              ServiceInstanceName: sap-bos-auth
+              ServiceKeyName: sap-bos-auth-key
+              sap.cloud.service: sap.bos.summary
+          existing_destinations_policy: update
+    build-parameters:
+      no-source: true
+  - name: sap-bos-ui-deployer
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: sap-bos-html-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - sapbosappsummary.zip
+          name: sapbosappsummary
+          target-path: resources/
+        - artifacts:
+            - sapbosappequipment.zip
+          name: sapbosappequipment
+          target-path: resources/
+        - artifacts:
+            - sapbosappa_supplier.zip
+          name: sapbosappa_supplier
+          target-path: resources/
+  - name: sapbosappsummary
+    type: html5
+    path: app/summary
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms: []
+  - name: sapbosappequipment
+    type: html5
+    path: app/equipment
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms: []
+  - name: sapbosappa_supplier
+    type: html5
+    path: app/a_supplier
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms: []
+resources:
+  - name: sap-bos-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+    properties:
+      hdi-service-name: ${service-name}
+  - name: sap-bos-html-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: sap-bos-html-repo-host
+      service-plan: app-host
+  - name: sap-bos-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        xsappname: sap-bos
+      path: ./xs-security.json
+      service: xsuaa
+      service-name: sap-bos-auth
+      service-plan: application
+  - name: sap-bos-connectivity
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: connectivity
+      service-plan: lite
+  - name: sap-bos-cloud-logs
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: cloud-logging
+      service-plan: standard
+      config:
+        ingest_otlp:
+          enabled: true
+        saml:
+          enabled: false
+  - name: sap-bos-dest
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        HTML5Runtime_enabled: true
+        init_data:
+          instance:
+            destinations:
+              - Authentication: NoAuthentication
+                Name: ui5
+                ProxyType: Internet
+                Type: HTTP
+                URL: https://ui5.sap.com
+              - Authentication: NoAuthentication
+                HTML5.DynamicDestination: true
+                HTML5.ForwardAuthToken: true
+                Name: sap-bos-srv-api
+                ProxyType: Internet
+                Type: HTTP
+                URL: ~{srv-api/srv-url}
+            existing_destinations_policy: update
+      service: destination
+      service-plan: lite
+    requires:
+      - name: srv-api
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production

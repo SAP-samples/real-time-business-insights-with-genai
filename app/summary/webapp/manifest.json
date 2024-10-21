@@ -1,0 +1,196 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "sap.bos.app.summary",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.13.5",
+      "toolsId": "2e785c79-e836-4a77-ae2b-1038eb85721f"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/bodetails/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "BusinessObject-Summarize": {
+          "semanticObject": "BusinessObject",
+          "action": "Summarize",
+          "title": "{{flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": false
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.124.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.ushell": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "sap.bos.app.summary.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": [
+          {
+              "uri": "css/style.css"
+          }
+      ]
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "BOList",
+          "target": "BOList"
+        },
+        {
+          "pattern": "{BusinessObject}({key}):?query:",
+          "name": "BOObjectPage",
+          "target": "BOObjectPage"
+        }
+      ],
+      "targets": {
+        "BOList": {
+          "type": "Component",
+          "id": "BOList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Equipment",
+              "variantManagement": "None",
+              "navigation": {
+                "Equipment": {
+                  "detail": {
+                    "route": "BOObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "personalization": {
+                      "column": false,
+                      "filter": false,
+                      "sort": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "BOObjectPage": {
+          "type": "Component",
+          "id": "BOObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "content": {
+                "body": {
+                  "sections": {
+                    "Summary": {
+                      "template": "sap.bos.app.summary.ext.fragment.HistoricalSummary",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "GFGeneral"
+                      },
+                      "onSectionLoaded": "sap.bos.app.summary.ext.fragment.HistoricalSummary.onSectionLoadedCS",
+                      "title": "Historical Summary"
+                    }
+                  }
+                }
+              },
+              "editableHeaderContent": false,
+              "contextPath": "/Equipment",
+              "variantManagement": "None",
+              "controlConfiguration": {
+                "orders/@com.sap.vocabularies.UI.v1.LineItem#MaintenanceOrder": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "personalization": {
+                      "column": false,
+                      "filter": false,
+                      "sort": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "sap.bos.summary"
+  }
+}

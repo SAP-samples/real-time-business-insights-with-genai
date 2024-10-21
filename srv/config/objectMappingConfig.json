@@ -1,0 +1,267 @@
+{
+    "S4HanaCloud": {
+        "BusinessObjects": [
+            {
+                "ObjectName": "MaintenanceOrder",
+                "ObjectNameLabel": "Maintenance Order Details",
+                "destinationName": "S4HANACLOUD_BO_MO",
+                "getUrl": "/sap/opu/odata/sap/API_MAINTENANCEORDER;v=0002",
+                "keyFields": [
+                    "MaintenanceOrder"
+                ],
+                "isListPageUI": false,
+                "listFields": {
+                    "MaintenanceOrder": {
+                        "type": "String(12)",
+                        "label": "Maintenance Order"
+                    },
+                    "MaintOrdBasicStartDate": {
+                        "type": "Date",
+                        "label": "Start Date",
+                        "isSummarize": true
+                    },
+                    "MaintOrdBasicEndDate": {
+                        "type": "Date",
+                        "label": "End Date",
+                        "isSummarize": true
+                    },
+                    "MaintenanceOrderDesc": {
+                        "type": "String(50)",
+                        "label": "Maintenance Order Description"
+                    },
+                    "CompanyCode": {
+                        "type": "String(10)",
+                        "label": "Company Code"
+                    },
+                    "Equipment": {
+                        "type": "String"
+                    },
+                    "EquipmentName": {
+                        "type": "String"
+                    },
+                    "MaintenanceOrderType": {
+                        "type": "String(4)",
+                        "label": "Order Type"
+                    }
+                },
+                "expand": [
+                    {
+                        "to_MaintenanceOrderLongText": {
+                            "ObjectName": "MaintenanceOrderLongText",
+                            "type": "Composition",
+                            "keyFields": [
+                                "TextObjectType",
+                                "Language"
+                            ],
+                            "listFields": {
+                                "TextObjectType": {
+                                    "type": "String"
+                                },
+                                "Language": {
+                                    "type": "String"
+                                },
+                                "MaintenanceOrderLongText": {
+                                    "type": "LargeString",
+                                    "label": "Maintenance Order Long Text",
+                                    "isSummarize": true
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "to_MaintenanceOrderOperation": {
+                            "ObjectName": "MaintenanceOrderOperation",
+                            "type": "Composition",
+                            "keyFields": [
+                                "MaintenanceOrderOperation",
+                                "MaintenanceOrderSubOperation"
+                            ],
+                            "listFields": {
+                                "MaintenanceOrderOperation": {
+                                    "type": "String"
+                                },
+                                "MaintenanceOrderSubOperation": {
+                                    "type": "String"
+                                },
+                                "OperationDescription": {
+                                    "type": "String",
+                                    "label": "Operation Description"
+                                }
+                            },
+                            "expand": [
+                                {
+                                    "to_MaintOrderOpLongText": {
+                                        "ObjectName": "MaintOrderOpLongText",
+                                        "keyFields": [
+                                            "TextObjectType",
+                                            "Language"
+                                        ],
+                                        "type": "Composition",
+                                        "listFields": {
+                                            "TextObjectType": {
+                                                "type": "String"
+                                            },
+                                            "Language": {
+                                                "type": "String"
+                                            },
+                                            "OrderOperationLongText": {
+                                                "type": "LargeString",
+                                                "isSummarize": true
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "ObjectName": "Equipment",
+                "ObjectNameLabel": "Equipment Details",
+                "destinationName": "S4HANACLOUD_BO_MO",
+                "getUrl": "/sap/opu/odata/sap/API_EQUIPMENT",
+                "searchFields": [
+                    "Equipment",
+                    "EquipmentName",
+                    "EquipmentCategory",
+                    "ManufacturerPartNmbr"
+                ],
+                "keyFields": [
+                    "Equipment"
+                ],
+                "isListPageUI": true,
+                "summaryType": "stuff",
+                "dependentObject": "MaintenanceOrder",
+                "listFields": {
+                    "Equipment": {
+                        "type": "String",
+                        "label": "Equipment"
+                    },
+                    "EquipmentName": {
+                        "type": "String",
+                        "label": "Equipment Name"
+                    },
+                    "ManufacturerPartNmbr": {
+                        "type": "String",
+                        "label": "Manufacturer Part Number"
+                    },
+                    "ManufacturerSerialNumber": {
+                        "type": "String",
+                        "label": "Manufacturer Serial Number"
+                    },
+                    "WorkCenterPlant": {
+                        "type": "String",
+                        "label": "Work Center Plant"
+                    },
+                    "AssetLocation": {
+                        "type": "String",
+                        "label": "Asset Location"
+                    },
+                    "EquipmentCategory": {
+                        "type": "String",
+                        "label": "Equipment Category"
+                    }
+                }
+            },
+            {
+                "ObjectName": "A_PurchaseOrder",
+                "ObjectNameLabel": "Purchase Order Details",
+                "destinationName": "S4HANACLOUD_BO_MO",
+                "getUrl": "/sap/opu/odata/sap/API_PURCHASEORDER_PROCESS_SRV",
+                "searchFields": [
+                    "PurchaseOrder",
+                    "PurchaseOrderType",
+                    "Supplier",
+                    "CompanyCode"
+                ],
+                "keyFields": [
+                    "PurchaseOrder"
+                ],
+                "isListPageUI": false,
+                "listFields": {
+                    "PurchaseOrder": {
+                        "type": "String",
+                        "label": "Purchase Order"
+                    },
+                    "PurchaseOrderType": {
+                        "type": "String(10)",
+                        "label": "Purchase Order Type"
+                    },
+                    "Supplier": {
+                        "type": "String",
+                        "label": "Supplier"
+                    },
+                    "PurchaseOrderDate": {
+                        "type": "String(20)",
+                        "label": "Purchase Order Date"
+                    },
+                    "CompanyCode": {
+                        "type": "String(10)",
+                        "label": "Company Code"
+                    }
+                },
+                "expand": [
+                    {
+                        "to_PurchaseOrderNote": {
+                            "ObjectName": "A_PurchaseOrderNote",
+                            "type": "Composition",
+                            "keyFields": [
+                                "TextObjectType",
+                                "Language"
+                            ],
+                            "listFields": {
+                                "TextObjectType": {
+                                    "type": "String"
+                                },
+                                "Language": {
+                                    "type": "String"
+                                },
+                                "PlainLongText": {
+                                    "type": "LargeString",
+                                    "label": "Purchase Order Long Text",
+                                    "isSummarize": true
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "ObjectName": "A_Supplier",
+                "ObjectNameLabel": "Supplier Details",
+                "destinationName": "S4HANACLOUD_BO_MO",
+                "getUrl": "/sap/opu/odata/sap/API_BUSINESS_PARTNER",
+                "searchFields": [
+                    "Supplier",
+                    "SupplierName",
+                    "SupplierAccountGroup"
+                ],
+                "keyFields": [
+                    "Supplier"
+                ],
+                "isListPageUI": true,
+                "summaryType": "map_reduce",
+                "dependentObject": "A_PurchaseOrder",
+                "listFields": {
+                    "Supplier": {
+                        "type": "String",
+                        "label": "Supplier"
+                    },
+                    "SupplierName": {
+                        "type": "String",
+                        "label": "Supplier Name"
+                    },
+                    "SupplierFullName": {
+                        "type": "String(50)",
+                        "label": "Supplier Full Name"
+                    },
+                    "SupplierAccountGroup": {
+                        "type": "String",
+                        "label": "Supplier Account Group"
+                    }
+                }
+            }
+        ]
+    }
+}

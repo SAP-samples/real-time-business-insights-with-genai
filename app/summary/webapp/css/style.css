@@ -1,0 +1,33 @@
+.sapUiFormCLElement {
+    /* background-color: #e6f7ff; */
+    min-width: calc(100vw - 10rem) !important;
+}
+
+
+ .sapMInputBaseReadonly:not(.sapMInputBaseDisabled) .sapMInputBaseContentWrapper{
+    background: 0 100% / 100% 0.125rem no-repeat linear-gradient(0deg, #0070f2, #0070f2) border-box !important;
+    background-color: #e1f4ff !important;
+    border: .125rem none #0070f2 !important;
+    box-shadow: inset 0 0 0 .0625rem rgba(104,174,255,0.5) !important;
+  }
+  
+  /*
+  .sapMBtn .sapMBtnSuccess, .sapContrast span.sapMBtnInner.sapMBtnSuccess {
+    background: #552cff;
+  }  */
+  
+  .sapUiFormCLContainer .sapMIBar.sapMTB .sapMBarChild:first-child, .sapUiRespGrid .sapMIBar .sapMBarChild:first-child{
+    margin: 0;
+  }
+  .sapMTB{
+    padding: 0;
+  }
+
+.sapMInputBase.sapMTextArea .sapMTextAreaInner, .sapMInputBase.sapMTextArea .sapMTextAreaMirror {
+    padding: 1.5rem !important;
+  }   
+  
+
+.customWhiteBG{
+    background-color: white !important;
+  }

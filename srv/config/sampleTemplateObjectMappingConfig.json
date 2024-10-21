@@ -1,0 +1,82 @@
+{
+    "<your-business-system>": {
+        "BusinessObjects": [
+            {
+                "ObjectName": "<your-api-entity-name>",
+                "ObjectNameLabel": "<your-api-entity-label>",
+                "destinationName": "<your-btp-destination-name>",
+                "getUrl": "<your-api-url>",
+                "searchFields": [
+                    "<field1>",
+                    "<field2>",
+        ...
+                ],
+                "keyFields": [
+                    "<key-field>"
+                ],
+                "isListPageUI"(To be set to false, in case of object Page): "<true/false>",
+                "summaryType": "<stuff/map_reduce/refine>",
+                "dependentObject" (Optional Param): "<your-dependent-api-entity-name>",
+                "listFields": {
+                    "<field1>": {
+                        "type": "<field1Type>",
+                        "label"(Optional, to be given to enable field on UI): "<fieldLable>",
+                        "isSummarize"(Optional, to be given to summarize field): true
+                    },
+                    "<field2>": {
+                        "type": "<field2Type>",
+                        "label": "<field2Label>"
+                    },
+        ...
+                },
+                "expand"(Optional Param): [
+                    {
+                        "<your-expand-api-entity-name>": {
+                            "ObjectName": "<your-expand-api-entity-name>",
+                            "type": "Composition",
+                            "keyFields": [
+                                "<key-field>",
+                    ...
+                            ],
+                            "listFields": {
+                                "<field1>": {
+                                    "type": "<field1Type>"
+                                },
+                                "<field2>": {
+                                    "type": "<field2Type>",
+                                    "label"(Optional, to be given to enable field on UI)
+                        "isSummarize"(Optional, to be given to summarize field): true
+                                },
+                    ...
+                            },
+                            "expand"(Optional Param): [
+                                {
+                                    "<your-expand-api-entity-name>": {
+                                        "ObjectName": "<your-expand-api-entity-name>",
+                                        "type": "Composition",
+                                        "keyFields": [
+                                            "<key-field>",
+                                ...
+                                        ],
+                                        "listFields": {
+                                            "<field1>": {
+                                                "type": "<field1Type>"
+                                            },
+                                            "<field2>": {
+                                                "type": "<field2Type>",
+                                                "label"(Optional, to be given to enable field on UI)
+                                    "isSummarize"(Optional, to be given to summarize field): true
+                                            },
+                                ...
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    ...
+}
