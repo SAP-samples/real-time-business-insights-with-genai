@@ -6,8 +6,7 @@ This repository explores an innovative approach to integrating Business Objects 
 
 > **Important Note** : Please be aware that this GitHub repository is still work in progress for improvements and additional scenarios. Make sure you're pulling the repository from time to time and redeploying it in SAP BTP.
 
-<!-- Register repository https://api.reuse.software/register, then add REUSE badge:
-[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/REPO-NAME)](https://api.reuse.software/info/github.com/SAP-samples/REPO-NAME) -->
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/real-time-business-insights-with-genai)](https://api.reuse.software/info/github.com/SAP-samples/real-time-business-insights-with-genai)
 
 ## Table of Contents
 
