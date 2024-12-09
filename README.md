@@ -1,8 +1,8 @@
 
 # Leveraging Dynamic Application Generation and GenAI for Real-Time Business Insights
-In the SAP ecosystem, most of us have interacted with Business Objects in one way or another. They are integral to any application created for clients or internal use, providing access to essential business data. However, the conventional process of connecting Business Objects to our applications, especially when performing specific actions on the data, can be tedious and time-consuming. 
+In the SAP ecosystem, most of us have interacted with business objects (like purchase order, maintenance order etc.) in one way or another. They are integral to any application created for clients or internal use, providing access to essential business data. However, the conventional process of connecting business objects to our applications, especially when performing specific actions on the data, can be tedious and time-consuming. 
 
-This repository explores an innovative approach to integrating Business Objects harnessing the GenAI capabilities into your applications in just a few simple steps, significantly reducing the effort and time involved while driving business insights.
+This repository explores an innovative architectural approach to dynamically generate application for real time business insights of business objects harnessing the GenAI capabilities like summarization in just a few simple steps, significantly reducing the effort and time.
 
 > **Important Note** : Please be aware that this GitHub repository is still work in progress for improvements and additional scenarios. Make sure you're pulling the repository from time to time and redeploying it in SAP BTP.
 
